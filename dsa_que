@@ -1,59 +1,59 @@
 class Solution {
 public:
-    pair<int,int> cnt(unordered_map<char,int>&alph)
-    {
-        int a1=0;
-        int a2=0;
-        for(auto it:alph)
-        {
-            if(it.second>0)
-            {
-            a1++;
-            a2+=it.second;
-            }
-        }
-                
-        return {a1,a2};
-    }
     int lengthOfLongestSubstring(string s) {
+//         map<char,int>m;
+//         int maxi=0;
+//         int curr_len=0;
+//         int len=1;
+//         for(auto it:s)
+//         {
+//             if(m[it]==0)
+//             {
+//                 m[it]=len;
+//                 len++;
+//                 curr_len++;
+//                 maxi=max(maxi,curr_len);
+//                 cout<<"!0"<<" "<<maxi<<" "<<len<<" " <<curr_len<<endl;;
+//             }
+//             else
+//             {
+//                 int temp=m[it];
+//                 len=len-m[it];
+//                 for(auto it2:m)
+//                 {
+//                     it2.second-=temp;
+//                     if(it2.second<=0)
+//                         m[it2.first]=0;
+//                         // m.erase(it2.first);
+//                 }
+//                 m[it]=len;
+                
+//                 curr_len=len;
+//                 maxi=max(maxi,curr_len);
+//                 len++;
+//                 cout<<"=0"<<" "<<maxi<<" "<<len<<" " <<curr_len<<endl;
+                
+//             }
+            
+//         }
+//         return maxi;
         
-        int i=0;
-        int j=0;
+        
         int maxi=0;
-        unordered_map<char,int>v;
-        int n=s.length();
-        if(n==0)
-            return 0;
-        while(j<n)
-            
+        int start=-1;
+        map<char,int>m;
+        for(auto it:s)
+            m[it]=-1;
+        for(int i=0;i<s.length();i++)
         {
-            v[s[j]]++;
-            pair<int,int>ct=cnt(v);
-            int p1=ct.first;
-            int p2=ct.second;
-            
-            if(p1==p2)
-            {
-                maxi=max(maxi,j-i+1);
-                j++;
-            }
-            else if(p1<p2)
-            {
-                while(p1<p2)
-                {
-                    v[s[i]]--;
-                    i++;
-                    ct=cnt(v);
-                    p1=ct.first;
-                    p2=ct.second;
-                }
-                ct=cnt(v);
-                p1=ct.first;
-                p2=ct.second;
-                if(p1==p2)maxi=max(maxi,j-i+1);
-                j++;
-            }
+            if(m[s[i]]>start)
+                start=m[s[i]];
+            m[s[i]]=i;
+            maxi=max(maxi,i-start);
         }
-        return maxi==0?-1:maxi;
+        return maxi;
+        
+        
+        
     }
 };
